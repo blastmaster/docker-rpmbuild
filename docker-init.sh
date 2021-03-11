@@ -59,7 +59,7 @@ mkdir -p "${OUTDIR}"
 cp -v -a --reflink=auto \
   ~rpmbuild/rpmbuild/{RPMS,SRPMS} "${OUTDIR}/"
 TO_CHOWN=( "${OUTDIR}/"{RPMS,SRPMS} )
-if [[ ${OUTDIR} != ${PWD} ]]; then
+if [[ ${OUTDIR} != "${PWD}" ]]; then
   TO_CHOWN=( "${OUTDIR}" )
 fi
 chown -v -R --reference="${PWD}" "${TO_CHOWN[@]}"
