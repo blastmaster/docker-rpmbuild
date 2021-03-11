@@ -23,7 +23,7 @@
 FROM centos:7
 MAINTAINER jitakirin <jitakirin@gmail.com>
 
-RUN yum install -y rpmdevtools yum-utils && \
+RUN yum install -y rpmdevtools yum-utils epel-release make && \
     yum clean all && \
     rm -r -f /var/cache/*
 ADD docker-init.sh docker-rpm-build.sh /usr/local/bin/
