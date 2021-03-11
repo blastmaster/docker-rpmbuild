@@ -16,13 +16,15 @@
 # You should have received a copy of the GNU General Public License
 # along with docker-rpmbuild.  If not, see <http://www.gnu.org/licenses/>.
 
-set -e "${VERBOSE:+-x}"
+#set -e "${VERBOSE:+-x}"
+set -x
 
 BUILD=true
 if [[ $1 == --sh ]]; then
   BUILD=false
   shift
 fi
+
 
 SPEC="$1"
 OUTDIR="${2:-$PWD}"
@@ -35,7 +37,7 @@ fi
 
 # pre-builddep hook for adding extra repos
 if [[ -n ${PRE_BUILDDEP} ]]; then
-  bash "${VERBOSE:+-x}" -c "${PRE_BUILDDEP}"
+  bash -x -c "${PRE_BUILDDEP}"
 fi
 
 # install build dependencies declared in the specfile
@@ -54,10 +56,10 @@ runuser rpmbuild /usr/local/bin/docker-rpm-build.sh "$@"
 # with source so that the caller of this image doesn't run into
 # permission issues
 mkdir -p "${OUTDIR}"
-cp "${VERBOSE:+-v}" -a --reflink=auto \
+cp -v -a --reflink=auto \
   ~rpmbuild/rpmbuild/{RPMS,SRPMS} "${OUTDIR}/"
 TO_CHOWN=( "${OUTDIR}/"{RPMS,SRPMS} )
 if [[ ${OUTDIR} != ${PWD} ]]; then
   TO_CHOWN=( "${OUTDIR}" )
 fi
-chown "${VERBOSE:+-v}" -R --reference="${PWD}" "${TO_CHOWN[@]}"
+chown -v -R --reference="${PWD}" "${TO_CHOWN[@]}"

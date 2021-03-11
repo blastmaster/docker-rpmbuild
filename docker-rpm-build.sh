@@ -16,14 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with docker-rpmbuild.  If not, see <http://www.gnu.org/licenses/>.
 
-set -e "${VERBOSE:+-x}"
+set -x
 
 SPEC="${1:?}"
 TOPDIR="${HOME}/rpmbuild"
 
 # copy sources and spec into rpmbuild's work dir
-cp "${VERBOSE:+-v}" -a --reflink=auto * "${TOPDIR}/SOURCES/"
-cp "${VERBOSE:+-v}" -a --reflink=auto "${SPEC}" "${TOPDIR}/SPECS/"
+cp -v -a --reflink=auto * "${TOPDIR}/SOURCES/"
+cp -v -a --reflink=auto "${SPEC}" "${TOPDIR}/SPECS/"
 SPEC="${TOPDIR}/SPECS/${SPEC##*/}"
 
 # build the RPMs
