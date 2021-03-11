@@ -27,4 +27,5 @@ cp -v -a --reflink=auto "${SPEC}" "${TOPDIR}/SPECS/"
 SPEC="${TOPDIR}/SPECS/${SPEC##*/}"
 
 # build the RPMs
-rpmbuild "${VERBOSE:+-v}" -ba "${SPEC}"
+export QA_RPATHS=0x0001
+rpmbuild -v -ba "${SPEC}"
